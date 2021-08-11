@@ -2,21 +2,18 @@
 
 namespace AspnetRun.Infrastructure.Migrations
 {
-    public partial class Initial : Migration
+    public partial class YourCustomEntityChanges : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateSequence(
-                name: "aspnetrun_type_hilo",
-                incrementBy: 10);
-
             migrationBuilder.CreateTable(
                 name: "Category",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    CategoryName = table.Column<string>(maxLength: 100, nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,15 +24,17 @@ namespace AspnetRun.Infrastructure.Migrations
                 name: "Product",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    ProductName = table.Column<string>(maxLength: 100, nullable: false),
-                    QuantityPerUnit = table.Column<string>(nullable: true),
-                    UnitPrice = table.Column<decimal>(nullable: true),
-                    UnitsInStock = table.Column<short>(nullable: true),
-                    UnitsOnOrder = table.Column<short>(nullable: true),
-                    ReorderLevel = table.Column<short>(nullable: true),
-                    Discontinued = table.Column<bool>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    QuantityPerUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    UnitsInStock = table.Column<short>(type: "smallint", nullable: true),
+                    UnitsOnOrder = table.Column<short>(type: "smallint", nullable: true),
+                    ReorderLevel = table.Column<short>(type: "smallint", nullable: true),
+                    Discontinued = table.Column<bool>(type: "bit", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    ProductReason = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,9 +60,6 @@ namespace AspnetRun.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Category");
-
-            migrationBuilder.DropSequence(
-                name: "aspnetrun_type_hilo");
         }
     }
 }
